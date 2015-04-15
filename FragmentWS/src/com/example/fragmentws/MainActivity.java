@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 import org.apache.http.HttpEntity;
@@ -26,9 +27,21 @@ import org.json.JSONObject;
 
 
 
+
+
+
+
+
+
+
 //import android.R;
 import android.app.Activity;
+import android.app.AlarmManager;
 import android.app.Application;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
@@ -45,10 +58,20 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 public class MainActivity extends Activity {
+	@Override
+	protected void onPause() {
+		// TODO Auto-generated method stub
+		super.onPause();
+		//stopService(new Intent(getBaseContext(),MyServices.class));
+		finish();
+	}
+
+
+
 	private List<Car> myCars = new ArrayList<Car>();
 	
 	HttpClient client;
-	final static String URL = "http://192.168.0.105:8080/CarsWS/webresources/entities.cars/";
+	final static String URL = "http://192.168.0.103:8080/CarsWS/webresources/entities.cars/";
 	JSONArray json;
 	
 	
@@ -58,6 +81,10 @@ public class MainActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
+		NotificationManager nm = (NotificationManager)getSystemService(NOTIFICATION_SERVICE);
+		nm.cancelAll();
+		
+		
 		client = new DefaultHttpClient();
 		
 		new LongRunningGetIO().execute(); 
@@ -247,6 +274,34 @@ public class MainActivity extends Activity {
 			
 			populateListView();
 			registerClickCallBack();
+			
+		//	Thread timer = new Thread() {
+			//	public void run() {
+				//	try{
+			//			sleep(4000);
+			//		}catch(InterruptedException e){
+				//		e.printStackTrace();
+				//	}finally {
+			System.out.println(System.currentTimeMillis());
+			
+						AlarmManager alarmManager = (AlarmManager)getSystemService(Context.ALARM_SERVICE);
+						Intent notiIntent = new Intent();
+						notiIntent.setClass(getBaseContext(), MyNotificationService.class);
+						PendingIntent pi = PendingIntent.getService(getBaseContext(), 0, notiIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+					//	startService(new Intent(getBaseContext(),MyNotificationService.class));
+					//	alarmManager.set(AlarmManager.RTC_WAKEUP, System.currentTimeMillis()+10000, pi);
+						alarmManager.setRepeating(AlarmManager.RTC_WAKEUP,System.currentTimeMillis()+10000,10000, pi);
+						
+					    
+					//}
+				//}
+			//};
+			
+			
+			
+		//	timer.start();
+			
+
 		
 		}
 
@@ -254,4 +309,7 @@ public class MainActivity extends Activity {
 
 
 		}
+	
+	
+	
 }

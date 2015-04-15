@@ -8,21 +8,37 @@
         android:minSdkVersion="8"
         android:targetSdkVersion="21" />
     <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.VIBRATE"/>
 
     <application
         android:allowBackup="true"
-        android:icon="@drawable/ic_launcher"
-        android:label="My Cars"
-        android:theme="@android:style/Theme.Light">
+        android:icon="@drawable/ic_launcher_app"
+     
+        android:theme="@android:style/Theme.NoTitleBar">
+        
         <activity
-            android:name=".MainActivity"
-            android:label="My Cars" >
+            android:name=".Splash"
+            android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        
+        <activity
+            android:name=".MainActivity"
+            android:label="Cars" >
+            <intent-filter>
+                <action android:name="com.example.fragmentws.MAINACTIVITY" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        
+        <service android:name="com.example.fragmentws.MyServices"/>
+        <service android:name="com.example.fragmentws.MyNotificationService"/>
+        
     </application>
 
 </manifest>
