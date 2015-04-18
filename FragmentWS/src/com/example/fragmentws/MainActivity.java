@@ -34,10 +34,12 @@ import org.json.JSONObject;
 
 
 
+
 //import android.R;
 import android.app.Activity;
 import android.app.AlarmManager;
 import android.app.Application;
+import android.app.Dialog;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
@@ -71,7 +73,7 @@ public class MainActivity extends Activity {
 	private List<Car> myCars = new ArrayList<Car>();
 	
 	HttpClient client;
-	final static String URL = "http://192.168.0.103:8080/CarsWS/webresources/entities.cars/";
+	final static String URL = "http://192.168.0.105:8080/CarsWS/webresources/entities.cars/";
 	JSONArray json;
 	
 	
@@ -271,17 +273,34 @@ public class MainActivity extends Activity {
 		}
 
 		protected void onPostExecute(String results) {
-			
+			long b = 0;
 			populateListView();
 			registerClickCallBack();
+			JSONObject last;
 			
-		//	Thread timer = new Thread() {
-			//	public void run() {
-				//	try{
-			//			sleep(4000);
-			//		}catch(InterruptedException e){
-				//		e.printStackTrace();
-				//	}finally {
+			SQLCars entry = new SQLCars(MainActivity.this);
+			entry.open();
+			
+			try {
+
+				System.out.println(json.length());
+				for (int i = 0 ; i<json.length(); i++) {
+				System.out.println(i);
+				last = json.getJSONObject(i);
+				
+				String vID = last.getString("brand");
+				 b = entry.createEntry(vID) ;}
+				System.out.println(b);
+				
+				}catch(Exception e) {
+					System.out.println("catch");
+				}
+				
+			entry.close();
+			
+			System.out.println(b);
+			
+			
 			System.out.println(System.currentTimeMillis());
 			
 						AlarmManager alarmManager = (AlarmManager)getSystemService(Context.ALARM_SERVICE);

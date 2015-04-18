@@ -21,11 +21,15 @@ public final class R {
         public static final int jaguar=0x7f020007;
         public static final int kia=0x7f020008;
         public static final int limo=0x7f020009;
-        public static final int mercedes=0x7f02000a;
-        public static final int peugeot=0x7f02000b;
-        public static final int van=0x7f02000c;
-        public static final int volvo=0x7f02000d;
-        public static final int vw=0x7f02000e;
+        public static final int maclaren=0x7f02000a;
+        public static final int mercedes=0x7f02000b;
+        public static final int moto=0x7f02000c;
+        public static final int notification_icon=0x7f02000d;
+        public static final int peugeot=0x7f02000e;
+        public static final int subaru=0x7f02000f;
+        public static final int van=0x7f020010;
+        public static final int volvo=0x7f020011;
+        public static final int vw=0x7f020012;
     }
     public static final class id {
         public static final int carsListView=0x7f070000;
